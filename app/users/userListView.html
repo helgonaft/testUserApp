@@ -1,4 +1,29 @@
-<p>This is the user list</p>
-<p>
-  User 1
-</p>
+<div class="conainer-fluid" ng-controller="UserListCtrl">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <h2 class="text-center">User List</h2>
+            <table class="table table-bordered table-responsive table-striped" ng-if="!errorWhileGettingUserList">
+                <thead>
+                <th>id</th>
+                <th>Name</th>
+                <th>email</th>
+                <th>Created</th>
+                <th>Updated</th>
+                <th>Options</th>
+                </thead>
+                <tbody>
+                <tr ng-repeat="user in users">
+                    <td>{{user.id}}</td>
+                    <td>{{user.name}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.created_at}}</td>
+                    <td>{{user.updated_at}}</td>
+                    <td><button class="btn btn-danger" ng-click="deleteUser(user.id)">Delete</button></td>
+                </tr>
+                </tbody>
+            </table>
+            <p class="text-danger" ng-if="errorWhileGettingUserList">{{errorWhileGettingUserList}}</p>
+        </div>
+    </div>
+
+</div>
