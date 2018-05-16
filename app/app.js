@@ -10,20 +10,19 @@ angular.module('userApp', [
         $stateProvider
             .state('home', {
                 url: "/home",
-                templateUrl: "users/userListView.html"
+                templateUrl: "home/homeView.html"
             })
             .state('login', {
                 url: "/sign_in",
-                templateUrl: "login/signInView.html",
-                controller: "SignInCtrl"
+                templateUrl: "login/signInView.html"
             })
             .state('userList', {
                 url: "/user_list",
                 templateUrl: "users/userListView.html"
             });
-        $urlRouterProvider.otherwise('/sign_in');
+        //$urlRouterProvider.otherwise('/sign_in');
     })
-    .run(['$rootScope', '$transitions', '$state', function ($rootScope, $transitions, $state) {
+    .run(['$rootScope', '$transitions', '$state', '$sessionStorage', function ($rootScope, $transitions, $state, $sessionStorage) {
         $rootScope.state = $state;
 
         //check access before going to user list page
@@ -35,6 +34,8 @@ angular.module('userApp', [
                 return $state.target("login");
             };
         });
+
+
 
     }]);
 
