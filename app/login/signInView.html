@@ -1,13 +1,14 @@
-<div class="row" ng-controller="SignInCtrl">
-    <div class="col-lg-6 col-lg-offset-3">
-        <h2 class="text-center">Please sign in</h2>
-        <form name="signInForm"  ng-submit="login()">
-            <input type="email" name="userEmail" class="form-control" ng-model="loginData.email" required>
-            <input type="password" name="userPassword" class="form-control" ng-model="loginData.password" required>
-            <input class="btn btn-block btn-primary" type="submit" value="Sign In">
-        </form>
+<div class="container" ng-controller="SignInCtrl">
+    <div class="row">
+        <div class="col-lg-6 col-lg-offset-3">
+            <h2 class="text-center">Please sign in</h2>
+            <form name="signInForm"  ng-submit="login()">
+                <input type="email" name="userEmail" class="form-control" ng-model="loginData.email" required>
+                <input type="password" name="userPassword" class="form-control" ng-model="loginData.password" required>
+                <input class="btn btn-block btn-primary" type="submit" value="Sign In">
+            </form>
 
-        <p ng-if="loginError" class="text-danger">{{errorReason}}</p>
+            <p ng-if="loginError" class="text-danger">{{errorReason}}</p>
+        </div>
     </div>
-
 </div>
