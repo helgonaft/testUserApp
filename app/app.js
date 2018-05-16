@@ -27,7 +27,6 @@ angular.module('userApp', [
 
         //check access before going to user list page
         $transitions.onBefore({to: 'userList', from: '*'}, function (trans) {
-            console.info(trans);
             var AuthService = trans.injector().get('SessionService');
             // if users are not authorized send them to login page
             if(!AuthService.checkAccess()){
