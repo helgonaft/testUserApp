@@ -1,0 +1,7 @@
+<div ng-controller="SignInCtrl">
+    <ul class="menu">
+        <li><a ui-sref="userList" ui-sref-active="active">User List</a></li>
+        <li  ng-if="!user"><a ui-sref="login" ui-sref-active="active">Sign In</a></li>
+        <li ng-if="user"><a href="" ng-click="logOut($event)">Log out</a></li>
+    </ul>
+</div>
