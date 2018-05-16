@@ -29,7 +29,6 @@ angular.module('userApp.userList', ['ui.router', 'ngStorage'])
         getUserList();
 
         $scope.deleteUser = function (userId) {
-            console.log(userId);
             var deleteUserById = $http({
                 url: "https://api-employee-testing.herokuapp.com/api/v1/users/" + userId,
                 method: "DELETE",
@@ -41,13 +40,14 @@ angular.module('userApp.userList', ['ui.router', 'ngStorage'])
                 function (response) {
                     if (response.data) {
                         $scope.deleteStatus = response.data.code;
+                        alert('User with id ' + userId + ' was successfully deleted!');
                         //update users data after deleting
                         getUserList();
                     }
                 },
                 function (error) {
                     $scope.errorWhileDeletingUser = error.statusText;
-                    alert($scope.errorWhileDeletingUser);
+                    alert('Error while deleting: ' + $scope.errorWhileDeletingUser);
                 }
             );
 
