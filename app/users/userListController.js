@@ -3,6 +3,7 @@
 angular.module('userApp.userList', ['ui.router', 'ngStorage'])
     .controller('UserListCtrl', function ($scope, $rootScope, $http, $sessionStorage, $state) {
         $scope.userListData = [];
+        $scope.newUserData = {};
         $scope.errorWhileGettingUserList = false;
 
         function getUserList() {
@@ -48,6 +49,42 @@ angular.module('userApp.userList', ['ui.router', 'ngStorage'])
                 function (error) {
                     $scope.errorWhileDeletingUser = error.statusText;
                     alert('Error while deleting: ' + $scope.errorWhileDeletingUser);
+                }
+            );
+
+        }
+
+        $scope.createUser = function() {
+            var createUserData = angular.toJson($scope.newUserData);
+            console.log(createUserData);
+            var createNewUser = $http({
+                url: "https://api-employee-testing.herokuapp.com/api/v1/users",
+                method: "POST",
+                headers: {
+                    "Content-Type": 'application/json',
+                    "Authorization": 'Bearer ' + $sessionStorage.userToken
+                },
+                data: createUserData
+            });
+            createNewUser.then(
+                function (response) {
+                    console.log(response);
+                    if (response.status == 201) {
+                        $scope.createdUser = response.data;
+                        $('#createUserModal').modal('hide');
+                        alert('New user ' +  $scope.createdUser.name + ' was successfully created!');
+                        //update users data after creating new user
+                        getUserList();
+                        return $scope.createdUser;
+                    }
+                },
+                function (error) {
+                    console.log(error);
+                    $scope.errorWhileCreatingUser = error.statusText;
+                    $scope.errorWhileCreatingUser_description = error.data.description;
+                    $('#createUserModal').modal('hide');
+                    alert('Error while creating new user: ' +  $scope.errorWhileCreatingUser + '. Error description: ' + $scope.errorWhileCreatingUser_description);
+                    return $scope.errorWhileCreatingUser;
                 }
             );
 

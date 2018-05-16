@@ -23,7 +23,31 @@
                 </tbody>
             </table>
             <p class="text-danger" ng-if="errorWhileGettingUserList">{{errorWhileGettingUserList}}</p>
+
+            <button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#createUserModal" >Create new user</button>
+
+            <div class="modal fade" id="createUserModal" tabindex="-1" role="dialog" aria-labelledby="createUserModal" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title text-center">Create new user</h3>
+                        </div>
+                        <div class="modal-body">
+                            <form name="newUserForm">
+                                <input type="text" name="newUserName" class="form-control" ng-model="newUserData.name" placeholder="name" required>
+                                <input type="email" name="newUserEmail" class="form-control" ng-model="newUserData.email" placeholder="email" required>
+                                <input type="password" name="newUserPassword" class="form-control" ng-model="newUserData.password" placeholder="password" required>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" ng-click="createUser()">Save user</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
 
 </div>
