@@ -124,5 +124,9 @@ form input {
 
 .userList-container {
   padding: 20px 0; }
+  .userList-container p i.fa-spin {
+    color: #0b4a46;
+    font-size: 50px;
+    margin: 20px 0; }
   .userList-container table td button {
     width: 100%; }

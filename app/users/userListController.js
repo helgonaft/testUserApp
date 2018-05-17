@@ -7,8 +7,10 @@ angular.module('userApp.userList', ['ui.router', 'ngStorage'])
         $scope.errorWhileGettingUserList = false;
         $scope.emailFormat = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
         $scope.passwordMinLength = 5;
+        $scope.loading = true;
 
         function getUserList() {
+            $scope.loading = true;
             var userList = $http({
                 url: ENDPOINT_URI+ "api/v1/users",
                 method: "GET",
@@ -19,13 +21,17 @@ angular.module('userApp.userList', ['ui.router', 'ngStorage'])
             });
             userList.then(
                 function (response) {
-                    if (response.status == 200) $scope.users = response.data.data;
+                    if (response.status == 200) {
+                        $scope.users = response.data.data;
+                        $scope.loading = false;
+                    }
                     return $scope.users;
                 },
                 function (error) {
                     $scope.errorWhileGettingUserList = error.statusText;
                     $scope.users= [];
                     Notification.error($scope.errorWhileDeletingUser);
+                    $scope.loading = false;
                     return $scope.errorWhileDeletingUser;
                 }
             );

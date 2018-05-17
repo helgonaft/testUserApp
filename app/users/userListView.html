@@ -12,8 +12,9 @@
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <h2 class="text-center text-uppercase">User List</h2>
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped table-hover" ng-if="!errorWhileGettingUserList">
+                <p class="text-center" ng-if="loading"><i class="fas fa-spinner  fa-spin"></i></p>
+                <div class="table-responsive" ng-if="!loading && !errorWhileGettingUserList">
+                    <table class="table table-bordered table-striped table-hover" >
                         <thead>
                         <th>id</th>
                         <th>Name</th>

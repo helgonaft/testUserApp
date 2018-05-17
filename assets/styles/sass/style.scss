@@ -140,6 +140,14 @@ form {
 .userList-container {
   padding:20px 0;
 
+  p {
+    i.fa-spin {
+      color: $primary-dark-color;
+      font-size: 50px;
+      margin: 20px 0;
+    }
+  }
+
   table {
     td {
       button {
