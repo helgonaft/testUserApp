@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('userApp.signIn', ['ui.router', 'ngStorage'])
-.controller('SignInCtrl', function($scope, $rootScope, $http, $sessionStorage, $state) {
+.controller('SignInCtrl', function($scope, $rootScope, $http, $sessionStorage, $state, ENDPOINT_URI, JSON_CONTENT_TYPE) {
     $scope.loginData = {};
     $scope.loginError = false;
 
@@ -9,8 +9,11 @@ angular.module('userApp.signIn', ['ui.router', 'ngStorage'])
         var loginData = angular.toJson($scope.loginData);
         console.log(loginData);
         var auth = $http({
-            url: "https://api-employee-testing.herokuapp.com/auth/v1/sign-in",
+            url: ENDPOINT_URI + "auth/v1/sign-in",
             method: "POST",
+            headers: {
+                'Content-Type' : JSON_CONTENT_TYPE
+            },
             data: loginData
         });
         auth.then(

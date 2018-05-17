@@ -1,17 +1,17 @@
 'use strict';
 
 angular.module('userApp.userList', ['ui.router', 'ngStorage'])
-    .controller('UserListCtrl', function ($scope, $rootScope, $http, $sessionStorage, $state) {
+    .controller('UserListCtrl', function ($scope, $rootScope, $http, $sessionStorage, ENDPOINT_URI, JSON_CONTENT_TYPE) {
         $scope.users = [];
         $scope.newUserData = {};
         $scope.errorWhileGettingUserList = false;
 
         function getUserList() {
             var userList = $http({
-                url: "https://api-employee-testing.herokuapp.com/api/v1/users",
+                url: ENDPOINT_URI+ "api/v1/users",
                 method: "GET",
                 headers: {
-                    "Content-Type": 'application/json',
+                    "Content-Type": JSON_CONTENT_TYPE,
                     "Authorization": 'Bearer ' + $sessionStorage.userToken
                 }
             });
@@ -31,7 +31,7 @@ angular.module('userApp.userList', ['ui.router', 'ngStorage'])
 
         $scope.deleteUser = function (userId) {
             var deleteUserById = $http({
-                url: "https://api-employee-testing.herokuapp.com/api/v1/users/" + userId,
+                url: ENDPOINT_URI + "api/v1/users/" + userId,
                 method: "DELETE",
                 headers: {
                     "Authorization": 'Bearer ' + $sessionStorage.userToken
@@ -58,10 +58,10 @@ angular.module('userApp.userList', ['ui.router', 'ngStorage'])
             var createUserData = angular.toJson($scope.newUserData);
             console.log(createUserData);
             var createNewUser = $http({
-                url: "https://api-employee-testing.herokuapp.com/api/v1/users",
+                url: ENDPOINT_URI + "api/v1/users",
                 method: "POST",
                 headers: {
-                    "Content-Type": 'application/json',
+                    "Content-Type": JSON_CONTENT_TYPE,
                     "Authorization": 'Bearer ' + $sessionStorage.userToken
                 },
                 data: createUserData
