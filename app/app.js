@@ -9,10 +9,6 @@ angular.module('userApp', [
 ])
     .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
-            .state('home', {
-                url: "/home",
-                templateUrl: "home/homeView.html"
-            })
             .state('login', {
                 url: "/sign_in",
                 templateUrl: "login/signInView.html"
@@ -21,7 +17,7 @@ angular.module('userApp', [
                 url: "/user_list",
                 templateUrl: "users/userListView.html"
             });
-        //$urlRouterProvider.otherwise('/sign_in');
+        $urlRouterProvider.otherwise('/sign_in');
     })
     .run(['$rootScope', '$transitions', '$state', '$sessionStorage', function ($rootScope, $transitions, $state, $sessionStorage) {
         $rootScope.state = $state;
