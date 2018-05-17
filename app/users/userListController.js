@@ -9,7 +9,11 @@ angular.module('userApp.userList', ['ui.router', 'ngStorage'])
         $scope.passwordMinLength = 5;
         $scope.loading = true;
 
-        function getUserList() {
+        $scope.getUserList = function(size) {
+            console.log(size);
+            var pazeSizeArg = parseInt(size);
+            var pageSize = pazeSizeArg>0 ? pazeSizeArg : 10;
+
             $scope.loading = true;
             var userList = $http({
                 url: ENDPOINT_URI+ "api/v1/users",
@@ -17,14 +21,16 @@ angular.module('userApp.userList', ['ui.router', 'ngStorage'])
                 headers: {
                     "Content-Type": JSON_CONTENT_TYPE,
                     "Authorization": 'Bearer ' + $sessionStorage.userToken
+                },
+                params: {
+                    "page": 1,
+                    "pageSize" : pageSize
                 }
             });
             userList.then(
                 function (response) {
-                    if (response.status == 200) {
-                        $scope.users = response.data.data;
-                        $scope.loading = false;
-                    }
+                    $scope.users = response.data.data;
+                    $scope.loading = false;
                     return $scope.users;
                 },
                 function (error) {
@@ -36,7 +42,7 @@ angular.module('userApp.userList', ['ui.router', 'ngStorage'])
                 }
             );
         }
-        getUserList();
+        $scope.getUserList();
 
         $scope.deleteUser = function (userId) {
             var deleteUserById = $http({
@@ -52,7 +58,7 @@ angular.module('userApp.userList', ['ui.router', 'ngStorage'])
                         $scope.deleteStatus = response.data.code;
                         Notification.success('User with id ' + userId + ' was successfully deleted!');
                         //update users data after deleting
-                        getUserList();
+                        $scope.getUserList();
                     }
                 },
                 function (error) {
@@ -89,7 +95,7 @@ angular.module('userApp.userList', ['ui.router', 'ngStorage'])
                             $('#createUserModal').modal('hide');
                             Notification.success('New user ' +  $scope.createdUser.name + ' was successfully created!');
                             //update users data after creating new user
-                            getUserList();
+                            $scope.getUserList();
                             return $scope.createdUser;
                         }
                     },
