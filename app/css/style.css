@@ -1,3 +1,10 @@
+body {
+  margin: 0;
+  padding: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  color: #0b4a46; }
+
 form input {
   margin: 10px 0;
   padding: 8px;
@@ -71,16 +78,22 @@ form input {
   -moz-border-radius: 0;
   -ms-border-radius: 0;
   border-radius: 0; }
+  .navbar-primary .navbar-header .navbar-toggle .icon-bar {
+    background-color: #d4d4d4; }
   .navbar-primary .navbar-header a.navbar-brand {
     color: #d4d4d4; }
     .navbar-primary .navbar-header a.navbar-brand:hover {
       color: white; }
   .navbar-primary .navbar-collapse ul.nav li a {
     color: #d4d4d4;
-    font-size: 20px; }
-    .navbar-primary .navbar-collapse ul.nav li a:hover, .navbar-primary .navbar-collapse ul.nav li a:active, .navbar-primary .navbar-collapse ul.nav li a:visited, .navbar-primary .navbar-collapse ul.nav li a:focus {
+    font-size: 18px; }
+    .navbar-primary .navbar-collapse ul.nav li a:focus, .navbar-primary .navbar-collapse ul.nav li a:active, .navbar-primary .navbar-collapse ul.nav li a:visited {
+      background: transparent;
+      outline: none; }
+    .navbar-primary .navbar-collapse ul.nav li a:hover {
       color: white;
-      background: transparent; }
+      background: transparent;
+      outline: none; }
 
 .signIn-container {
   height: calc(100vh - 80px);
@@ -108,3 +121,6 @@ form input {
   -webkit-align-items: center;
   -moz-align-items: center;
   align-items: center; }
+
+.userList-container {
+  padding: 20px 0; }

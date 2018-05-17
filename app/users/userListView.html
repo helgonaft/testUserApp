@@ -1,75 +1,78 @@
-<div class="container-fluid" ng-controller="UserListCtrl">
-    <div class="row">
-        <div class="col-md-6 col-md-offset-1">
-            <h3>Current user info</h3>
-            <ul class="list-unstyled">
-                <li><b>name:</b> {{user.name}}</li>
-                <li><b>email:</b> {{user.email}}</li>
-            </ul>
+<div class="userList-container" ng-controller="UserListCtrl">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-1">
+                <h3>Current user info</h3>
+                <ul class="list-unstyled">
+                    <li><b>name:</b> {{user.name}}</li>
+                    <li><b>email:</b> {{user.email}}</li>
+                </ul>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-            <h2 class="text-center">User List</h2>
-            <table class="table table-bordered table-responsive table-striped table-hover" ng-if="!errorWhileGettingUserList">
-                <thead>
-                <th>id</th>
-                <th>Name</th>
-                <th>email</th>
-                <th>Created</th>
-                <th>Updated</th>
-                <th>Options</th>
-                </thead>
-                <tbody>
-                <tr ng-repeat="user in users">
-                    <td>{{user.id}}</td>
-                    <td>{{user.name}}</td>
-                    <td>{{user.email}}</td>
-                    <td>{{user.created_at | amUtc | amLocal | amDateFormat:'MMMM Do YYYY, HH:mm:ss'}}</td>
-                    <td>{{user.updated_at | amUtc | amLocal | amDateFormat:'MMMM Do YYYY, HH:mm:ss'}}</td>
-                    <td><button class="btn btn-danger" ng-click="deleteUser(user.id)">Delete</button></td>
-                </tr>
-                </tbody>
-            </table>
-            <p class="text-danger" ng-if="errorWhileGettingUserList">{{errorWhileGettingUserList}}</p>
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <h2 class="text-center text-uppercase">User List</h2>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover" ng-if="!errorWhileGettingUserList">
+                        <thead>
+                        <th>id</th>
+                        <th>Name</th>
+                        <th>email</th>
+                        <th>Created</th>
+                        <th>Updated</th>
+                        <th>Options</th>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="user in users">
+                            <td>{{user.id}}</td>
+                            <td>{{user.name}}</td>
+                            <td>{{user.email}}</td>
+                            <td>{{user.created_at | amUtc | amLocal | amDateFormat:'MMMM Do YYYY, HH:mm:ss'}}</td>
+                            <td>{{user.updated_at | amUtc | amLocal | amDateFormat:'MMMM Do YYYY, HH:mm:ss'}}</td>
+                            <td><button class="btn btn-danger" ng-click="deleteUser(user.id)">Delete</button></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-            <button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#createUserModal" >Create new user</button>
+                <p class="text-danger" ng-if="errorWhileGettingUserList">{{errorWhileGettingUserList}}</p>
 
-            <div class="modal fade" id="createUserModal" tabindex="-1" role="dialog" aria-labelledby="createUserModal" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h3 class="modal-title text-center">Create new user</h3>
-                        </div>
-                        <div class="modal-body">
-                            <form id="newUserForm" name="newUserForm" ng-submit="createUser()" novalidate >
-                                <label class="text-danger" ng-if="newUserForm.$submitted && newUserForm.newUserName.$error.required">Required!</label>
+                <button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#createUserModal" >Create new user</button>
 
-                                <input type="text" name="newUserName" class="" ng-model="newUserData.name" placeholder="name" required>
+                <div class="modal fade" id="createUserModal" tabindex="-1" role="dialog" aria-labelledby="createUserModal" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title text-center">Create new user</h3>
+                            </div>
+                            <div class="modal-body">
+                                <form id="newUserForm" name="newUserForm" ng-submit="createUser()" novalidate >
+                                    <label class="text-danger" ng-if="newUserForm.$submitted && newUserForm.newUserName.$error.required">Required!</label>
 
-                                <label class="text-danger" ng-if="newUserForm.$submitted && newUserForm.newUserEmail.$error.required">Required!</label>
-                                <label class="text-danger" ng-if="newUserForm.newUserEmail.$dirty && newUserForm.newUserEmail.$error.pattern">Not valid email!</label>
+                                    <input type="text" name="newUserName" class="" ng-model="newUserData.name" placeholder="name" required>
 
-                                <input type="email" name="newUserEmail" class="" ng-model="newUserData.email" placeholder="email" ng-pattern="emailFormat" required>
+                                    <label class="text-danger" ng-if="newUserForm.$submitted && newUserForm.newUserEmail.$error.required">Required!</label>
+                                    <label class="text-danger" ng-if="newUserForm.newUserEmail.$dirty && newUserForm.newUserEmail.$error.pattern">Not valid email!</label>
 
-                                <label class="text-danger" ng-if="newUserForm.$submitted && newUserForm.newUserPassword.$error.required">Required!</label>
-                                <label class="text-danger" ng-if="newUserForm.$dirty && newUserForm.newUserPassword.$error.minlength">minimum {{passwordMinLength}} symbols</label>
+                                    <input type="email" name="newUserEmail" class="" ng-model="newUserData.email" placeholder="email" ng-pattern="emailFormat" required>
 
-                                <input type="text" name="newUserPassword" class="" ng-model="newUserData.password" ng-minlength="passwordMinLength" placeholder="password" required>
+                                    <label class="text-danger" ng-if="newUserForm.$submitted && newUserForm.newUserPassword.$error.required">Required!</label>
+                                    <label class="text-danger" ng-if="newUserForm.$dirty && newUserForm.newUserPassword.$error.minlength">minimum {{passwordMinLength}} symbols</label>
 
-                            </form>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                <input type="submit" form="newUserForm" class="btn btn-primary" value="Save user">
+                                    <input type="text" name="newUserPassword" class="" ng-model="newUserData.password" ng-minlength="passwordMinLength" placeholder="password" required>
+
+                                </form>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    <input type="submit" form="newUserForm" class="btn btn-primary" value="Save user">
+                                </div>
+
                             </div>
 
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
 </div>

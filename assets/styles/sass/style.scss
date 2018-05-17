@@ -2,6 +2,15 @@
 @import "base/variables";
 @import "../../../app/bower_components/zessx-sass-flexbox/sass-flexbox";
 
+body {
+  margin:0;
+  padding:0;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  color: $primary-dark-color;
+}
+
 form {
   input {
     margin: 10px 0;
@@ -80,6 +89,11 @@ form {
     @include border-radius(0);
 
     .navbar-header {
+      .navbar-toggle{
+        .icon-bar {
+          background-color: $light-grey;
+        }
+      }
       a.navbar-brand {
         color: $light-grey;
         &:hover {
@@ -94,11 +108,18 @@ form {
           li {
             a {
               color: $light-grey;
-              font-size: 20px;
+              font-size: 18px;
 
-              &:hover, &:active, &:visited, &:focus {
+              &:focus, &:active, &:visited{
+
+                background: transparent;
+                outline: none;
+              }
+
+              &:hover {
                 color: white;
                 background: transparent;
+                outline: none;
               }
             }
           }
@@ -114,4 +135,8 @@ form {
   @include flex-direction-row();
   @include justify-content-center();
   @include align-items-center;
+}
+
+.userList-container {
+  padding:20px 0;
 }
