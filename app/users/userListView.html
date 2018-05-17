@@ -42,16 +42,29 @@
                             <h3 class="modal-title text-center">Create new user</h3>
                         </div>
                         <div class="modal-body">
-                            <form name="newUserForm">
+                            <form id="newUserForm" name="newUserForm" ng-submit="createUser()" novalidate >
+                                <label class="text-danger" ng-if="newUserForm.$submitted && newUserForm.newUserName.$error.required">Required!</label>
+
                                 <input type="text" name="newUserName" class="" ng-model="newUserData.name" placeholder="name" required>
-                                <input type="email" name="newUserEmail" class="" ng-model="newUserData.email" placeholder="email" required>
-                                <input type="password" name="newUserPassword" class="" ng-model="newUserData.password" placeholder="password" required>
+
+                                <label class="text-danger" ng-if="newUserForm.$submitted && newUserForm.newUserEmail.$error.required">Required!</label>
+                                <label class="text-danger" ng-if="newUserForm.newUserEmail.$dirty && newUserForm.newUserEmail.$error.pattern">Not valid email!</label>
+
+                                <input type="email" name="newUserEmail" class="" ng-model="newUserData.email" placeholder="email" ng-pattern="emailFormat" required>
+
+                                <label class="text-danger" ng-if="newUserForm.$submitted && newUserForm.newUserPassword.$error.required">Required!</label>
+                                <label class="text-danger" ng-if="newUserForm.$dirty && newUserForm.newUserPassword.$error.minlength">minimum {{passwordMinLength}} symbols</label>
+
+                                <input type="text" name="newUserPassword" class="" ng-model="newUserData.password" ng-minlength="passwordMinLength" placeholder="password" required>
+
                             </form>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <input type="submit" form="newUserForm" class="btn btn-primary" value="Save user">
+                            </div>
+
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-primary" ng-click="createUser()">Save user</button>
-                        </div>
+
                     </div>
                 </div>
             </div>

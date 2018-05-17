@@ -5,6 +5,8 @@ angular.module('userApp.userList', ['ui.router', 'ngStorage'])
         $scope.users = [];
         $scope.newUserData = {};
         $scope.errorWhileGettingUserList = false;
+        $scope.emailFormat = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
+        $scope.passwordMinLength = 5;
 
         function getUserList() {
             var userList = $http({
@@ -52,42 +54,47 @@ angular.module('userApp.userList', ['ui.router', 'ngStorage'])
                 }
             );
 
-        }
+        };
 
         $scope.createUser = function() {
-            var createUserData = angular.toJson($scope.newUserData);
-            console.log(createUserData);
-            var createNewUser = $http({
-                url: ENDPOINT_URI + "api/v1/users",
-                method: "POST",
-                headers: {
-                    "Content-Type": JSON_CONTENT_TYPE,
-                    "Authorization": 'Bearer ' + $sessionStorage.userToken
-                },
-                data: createUserData
-            });
-            createNewUser.then(
-                function (response) {
-                    console.log(response);
-                    if (response.status == 201) {
-                        $scope.createdUser = response.data;
+            var formIsFilled = true;
+            if(!$scope.newUserData.email || !$scope.newUserData.name || !$scope.newUserData.password){
+                formIsFilled = false;
+            }
+            if(formIsFilled){
+                var createUserData = angular.toJson($scope.newUserData);
+                console.log(createUserData);
+                var createNewUser = $http({
+                    url: ENDPOINT_URI + "api/v1/users",
+                    method: "POST",
+                    headers: {
+                        "Content-Type": JSON_CONTENT_TYPE,
+                        "Authorization": 'Bearer ' + $sessionStorage.userToken
+                    },
+                    data: createUserData
+                });
+                createNewUser.then(
+                    function (response) {
+                        console.log(response);
+                        if (response.status == 201) {
+                            $scope.createdUser = response.data;
+                            $('#createUserModal').modal('hide');
+                            alert('New user ' +  $scope.createdUser.name + ' was successfully created!');
+                            //update users data after creating new user
+                            getUserList();
+                            return $scope.createdUser;
+                        }
+                    },
+                    function (error) {
+                        console.log(error);
+                        $scope.errorWhileCreatingUser = error.statusText;
+                        $scope.errorWhileCreatingUser_description = error.data.description;
                         $('#createUserModal').modal('hide');
-                        alert('New user ' +  $scope.createdUser.name + ' was successfully created!');
-                        //update users data after creating new user
-                        getUserList();
-                        return $scope.createdUser;
+                        alert('Error while creating new user: ' +  $scope.errorWhileCreatingUser + '. Error description: ' + $scope.errorWhileCreatingUser_description);
+                        return $scope.errorWhileCreatingUser;
                     }
-                },
-                function (error) {
-                    console.log(error);
-                    $scope.errorWhileCreatingUser = error.statusText;
-                    $scope.errorWhileCreatingUser_description = error.data.description;
-                    $('#createUserModal').modal('hide');
-                    alert('Error while creating new user: ' +  $scope.errorWhileCreatingUser + '. Error description: ' + $scope.errorWhileCreatingUser_description);
-                    return $scope.errorWhileCreatingUser;
-                }
-            );
-
+                );
+            }
         }
 
     });
