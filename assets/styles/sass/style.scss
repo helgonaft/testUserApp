@@ -1,0 +1,44 @@
+@import "helpers/mixins";
+@import "helpers/variables";
+
+form {
+  input {
+    margin: 10px 0;
+    padding: 8px;
+    width: 100%;
+    border: 1px solid $primary-color;
+    outline: none;
+
+    @include border-radius(0);
+
+    @include placeholder {
+      color: grey;
+    }
+  }
+}
+
+.btn {
+  &-primary {
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    @include border-radius(0);
+
+    &:hover{
+      background-color: $primary-dark-color;
+      border: none;
+    }
+    &:active{
+      background-color: $primary-dark-color;
+      border: none;
+    }
+    &:focus{
+      background-color: $primary-dark-color;
+      border: none;
+    }
+    &:visited{
+      background-color: $primary-dark-color;
+      border: none;
+    }
+  }
+}
