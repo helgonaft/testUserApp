@@ -24,7 +24,6 @@ angular.module('userApp.signIn', ['ui.router', 'ngStorage'])
             });
             auth.then(
                 function (response) {
-                    console.log(response);
                     if(response.status == 200){
                         $scope.userData = response.data.user;
                         $sessionStorage.user = $scope.userData;
@@ -37,7 +36,6 @@ angular.module('userApp.signIn', ['ui.router', 'ngStorage'])
 
                 },
                 function(error) {
-                    console.error(error);
                     $scope.loginError = true;
                     $scope.errorReason = 'Error: '+ error.statusText + '. ' + error.data.description;
                     Notification.error($scope.errorReason);

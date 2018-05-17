@@ -8,42 +8,53 @@
                     <li><b>email:</b> {{user.email}}</li>
                 </ul>
             </div>
-            <div class="col-md-5">
-                <div class="text-right">
-                    <h3>How many users to show:</h3>
-                    <div>
-                        <input type="number" min="1" ng-model="pageSize" placeholder="1">
-                        <button type="button" ng-click="getUserList(pageSize)">ok</button>
-                    </div>
-                </div>
 
-            </div>
         </div>
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <h2 class="text-center text-uppercase">User List</h2>
                 <p class="text-center" ng-if="loading"><i class="fas fa-spinner  fa-spin"></i></p>
-                <div class="table-responsive" ng-if="!loading && !errorWhileGettingUserList">
-                    <table class="table table-bordered table-striped table-hover" >
-                        <thead>
-                        <th>id</th>
-                        <th>Name</th>
-                        <th>email</th>
-                        <th>Created</th>
-                        <th>Updated</th>
-                        <th>Options</th>
-                        </thead>
-                        <tbody>
-                        <tr ng-repeat="user in users">
-                            <td>{{user.id}}</td>
-                            <td>{{user.name}}</td>
-                            <td>{{user.email}}</td>
-                            <td>{{user.created_at | amUtc | amLocal | amDateFormat:'MMMM Do YYYY, HH:mm:ss'}}</td>
-                            <td>{{user.updated_at | amUtc | amLocal | amDateFormat:'MMMM Do YYYY, HH:mm:ss'}}</td>
-                            <td><button class="btn btn-danger" ng-click="deleteUser(user.id)">Delete</button></td>
-                        </tr>
-                        </tbody>
-                    </table>
+                <div ng-if="!loading && !errorWhileGettingUserList">
+                   <div class="row">
+                       <div class="col-md-6">
+                           <ul class="pagination">
+                               <li ng-repeat="page in pagesAmount track by $index"><a href="" ng-click="getUserList(pageSize, $index+1)">{{$index + 1}}</a></li>
+
+                           </ul>
+                       </div>
+                       <div class="col-md-6">
+                           <div class="text-right">
+                               <h4>How many users to show on a page:</h4>
+                               <div>
+                                   <input type="number" min="1" ng-model="pageSize" placeholder="1">
+                                   <button type="button" ng-click="getUserList(pageSize)">ok</button>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover" >
+                            <thead>
+                            <th>id</th>
+                            <th>Name</th>
+                            <th>email</th>
+                            <th>Created</th>
+                            <th>Updated</th>
+                            <th>Options</th>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="user in users">
+                                <td>{{user.id}}</td>
+                                <td>{{user.name}}</td>
+                                <td>{{user.email}}</td>
+                                <td>{{user.created_at | amUtc | amLocal | amDateFormat:'MMMM Do YYYY, HH:mm:ss'}}</td>
+                                <td>{{user.updated_at | amUtc | amLocal | amDateFormat:'MMMM Do YYYY, HH:mm:ss'}}</td>
+                                <td><button class="btn btn-danger" ng-click="deleteUser(user.id)">Delete</button></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
 
                 <p class="text-danger" ng-if="errorWhileGettingUserList">{{errorWhileGettingUserList}}</p>

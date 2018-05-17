@@ -8,13 +8,18 @@ angular.module('userApp.userList', ['ui.router', 'ngStorage'])
         $scope.emailFormat = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
         $scope.passwordMinLength = 5;
         $scope.loading = true;
+        $scope.pageSize = 10;
 
-        var pageSize = 1;
-
-        $scope.getUserList = function(size) {
-            console.log(size);
-            var pazeSizeArg = parseInt(size);
-            pageSize = pazeSizeArg>0 ? pazeSizeArg : 10;
+        $scope.getUserList = function(pageSizeParam, pageNumParam) {
+            var pageNumber = 1;
+            if(pageSizeParam) {
+                var pazeSizeArg = parseInt(pageSizeParam, 10);
+                $scope.pageSize = pazeSizeArg > 0 ? pazeSizeArg : 10;
+            }
+            if(pageNumParam){
+                pageNumber = parseInt(pageNumParam, 10);
+                $scope.page = pageNumber > 0 ? pageNumber : 1;
+            }
 
             $scope.loading = true;
             var userList = $http({
@@ -25,14 +30,16 @@ angular.module('userApp.userList', ['ui.router', 'ngStorage'])
                     "Authorization": 'Bearer ' + $sessionStorage.userToken
                 },
                 params: {
-                    "page": 1,
-                    "pageSize" : pageSize
+                    "page": pageNumber,
+                    "pageSize" : $scope.pageSize
                 }
             });
             userList.then(
                 function (response) {
                     $scope.users = response.data.data;
+                    $scope.pagination = response.data.pagination;
                     $scope.loading = false;
+                    createPagination($scope.pagination);
                     return $scope.users;
                 },
                 function (error) {
@@ -43,7 +50,7 @@ angular.module('userApp.userList', ['ui.router', 'ngStorage'])
                     return $scope.errorWhileDeletingUser;
                 }
             );
-        }
+        };
         $scope.getUserList();
 
         $scope.deleteUser = function (userId) {
@@ -60,7 +67,7 @@ angular.module('userApp.userList', ['ui.router', 'ngStorage'])
                         $scope.deleteStatus = response.data.code;
                         Notification.success('User with id ' + userId + ' was successfully deleted!');
                         //update users data after deleting
-                        $scope.getUserList(pageSize);
+                        $scope.getUserList($scope.pageSize);
                     }
                 },
                 function (error) {
@@ -79,7 +86,6 @@ angular.module('userApp.userList', ['ui.router', 'ngStorage'])
             }
             if(formIsFilled){
                 var createUserData = angular.toJson($scope.newUserData);
-                console.log(createUserData);
                 var createNewUser = $http({
                     url: ENDPOINT_URI + "api/v1/users",
                     method: "POST",
@@ -91,18 +97,16 @@ angular.module('userApp.userList', ['ui.router', 'ngStorage'])
                 });
                 createNewUser.then(
                     function (response) {
-                        console.log(response);
                         if (response.status == 201) {
                             $scope.createdUser = response.data;
                             $('#createUserModal').modal('hide');
                             Notification.success('New user ' +  $scope.createdUser.name + ' was successfully created!');
                             //update users data after creating new user
-                            $scope.getUserList(pageSize);
+                            $scope.getUserList($scope.pageSize);
                             return $scope.createdUser;
                         }
                     },
                     function (error) {
-                        console.log(error);
                         $scope.errorWhileCreatingUser = error.statusText;
                         $scope.errorWhileCreatingUser_description = error.data.description;
                         $('#createUserModal').modal('hide');
@@ -111,6 +115,10 @@ angular.module('userApp.userList', ['ui.router', 'ngStorage'])
                     }
                 );
             }
+        };
+
+        function createPagination(data){
+            $scope.pagesAmount = new Array(data.pageCount);
         }
 
     });
