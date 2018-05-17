@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-6 col-lg-offset-3">
-                <h2 class="text-center">Please sign in</h2>
+                <h2 class="text-center text-uppercase">Please sign in</h2>
                 <form name="signInForm"  ng-submit="login()" novalidate>
                     <div>
                         <span class="text-danger" ng-if="signInForm.userEmail.$error.pattern">not valid email!</span>
@@ -15,10 +15,9 @@
                         <input type="password" name="userPassword" ng-model="loginData.password" ng-maxlength="10" placeholder="Password" required>
                     </div>
 
-                    <input class="btn btn-block btn-primary" type="submit" value="Sign In" ng-disabled="signInForm.userEmail.$dirty  && signInForm.userPassword.$dirty && signInForm.$invalid">
+                    <input class="btn btn-block btn-primary" type="submit" value="SIGN IN" ng-disabled="signInForm.userEmail.$dirty  && signInForm.userPassword.$dirty && signInForm.$invalid">
                 </form>
 
-                <p ng-if="loginError" class="text-danger">{{errorReason}}</p>
             </div>
         </div>
     </div>

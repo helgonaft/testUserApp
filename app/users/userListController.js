@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('userApp.userList', ['ui.router', 'ngStorage'])
-    .controller('UserListCtrl', function ($scope, $rootScope, $http, $sessionStorage, ENDPOINT_URI, JSON_CONTENT_TYPE) {
+    .controller('UserListCtrl', function ($scope, $rootScope, $http, $sessionStorage, ENDPOINT_URI, JSON_CONTENT_TYPE, Notification) {
         $scope.users = [];
         $scope.newUserData = {};
         $scope.errorWhileGettingUserList = false;
@@ -25,6 +25,7 @@ angular.module('userApp.userList', ['ui.router', 'ngStorage'])
                 function (error) {
                     $scope.errorWhileGettingUserList = error.statusText;
                     $scope.users= [];
+                    Notification.error($scope.errorWhileDeletingUser);
                     return $scope.errorWhileDeletingUser;
                 }
             );
@@ -43,14 +44,14 @@ angular.module('userApp.userList', ['ui.router', 'ngStorage'])
                 function (response) {
                     if (response.data) {
                         $scope.deleteStatus = response.data.code;
-                        alert('User with id ' + userId + ' was successfully deleted!');
+                        Notification.success('User with id ' + userId + ' was successfully deleted!');
                         //update users data after deleting
                         getUserList();
                     }
                 },
                 function (error) {
                     $scope.errorWhileDeletingUser = error.statusText;
-                    alert('Error while deleting: ' + $scope.errorWhileDeletingUser);
+                    Notification.error('Error while deleting: ' + $scope.errorWhileDeletingUser);
                 }
             );
 
@@ -60,6 +61,7 @@ angular.module('userApp.userList', ['ui.router', 'ngStorage'])
             var formIsFilled = true;
             if(!$scope.newUserData.email || !$scope.newUserData.name || !$scope.newUserData.password){
                 formIsFilled = false;
+                Notification.error('You need to fill in the form!');
             }
             if(formIsFilled){
                 var createUserData = angular.toJson($scope.newUserData);
@@ -79,7 +81,7 @@ angular.module('userApp.userList', ['ui.router', 'ngStorage'])
                         if (response.status == 201) {
                             $scope.createdUser = response.data;
                             $('#createUserModal').modal('hide');
-                            alert('New user ' +  $scope.createdUser.name + ' was successfully created!');
+                            Notification.success('New user ' +  $scope.createdUser.name + ' was successfully created!');
                             //update users data after creating new user
                             getUserList();
                             return $scope.createdUser;
@@ -90,7 +92,7 @@ angular.module('userApp.userList', ['ui.router', 'ngStorage'])
                         $scope.errorWhileCreatingUser = error.statusText;
                         $scope.errorWhileCreatingUser_description = error.data.description;
                         $('#createUserModal').modal('hide');
-                        alert('Error while creating new user: ' +  $scope.errorWhileCreatingUser + '. Error description: ' + $scope.errorWhileCreatingUser_description);
+                        Notification.error('Error while creating new user: ' +  $scope.errorWhileCreatingUser + '. Error description: ' + $scope.errorWhileCreatingUser_description);
                         return $scope.errorWhileCreatingUser;
                     }
                 );

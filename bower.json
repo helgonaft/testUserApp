@@ -9,7 +9,8 @@
     "zessx-sass-flexbox": "^2.0.0",
     "ngstorage": "^0.3.11",
     "angular-moment": "^1.2.0",
-    "moment": "^2.22.1"
+    "moment": "^2.22.1",
+    "angular-ui-notification": "^0.3.6"
   },
   "homepage": "https://github.com/helgonaft/testUserApp",
   "authors": [

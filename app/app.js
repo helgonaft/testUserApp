@@ -5,7 +5,8 @@ angular.module('userApp', [
     'ngStorage',
     'userApp.signIn',
     'userApp.userList',
-    'angularMoment'
+    'angularMoment',
+    'ui-notification'
 ])
     .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
@@ -18,8 +19,9 @@ angular.module('userApp', [
                 templateUrl: "users/userListView.html"
             });
         $urlRouterProvider.otherwise('/sign_in');
+
     })
-    .run(['$rootScope', '$transitions', '$state', '$sessionStorage', function ($rootScope, $transitions, $state, $sessionStorage) {
+    .run(['$rootScope', '$transitions', '$state', '$sessionStorage', 'Notification', function ($rootScope, $transitions, $state, $sessionStorage, Notification) {
         $rootScope.state = $state;
 
         //check access before going to user list page
@@ -27,11 +29,10 @@ angular.module('userApp', [
             var AuthService = trans.injector().get('SessionService');
             // if users are not authorized send them to login page
             if(!AuthService.checkAccess()){
+                Notification.error('You have to login in order to see user list!');
                 return $state.target("login");
             };
         });
-
-
 
     }]);
 
