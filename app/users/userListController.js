@@ -9,10 +9,12 @@ angular.module('userApp.userList', ['ui.router', 'ngStorage'])
         $scope.passwordMinLength = 5;
         $scope.loading = true;
 
+        var pageSize = 1;
+
         $scope.getUserList = function(size) {
             console.log(size);
             var pazeSizeArg = parseInt(size);
-            var pageSize = pazeSizeArg>0 ? pazeSizeArg : 10;
+            pageSize = pazeSizeArg>0 ? pazeSizeArg : 10;
 
             $scope.loading = true;
             var userList = $http({
@@ -58,7 +60,7 @@ angular.module('userApp.userList', ['ui.router', 'ngStorage'])
                         $scope.deleteStatus = response.data.code;
                         Notification.success('User with id ' + userId + ' was successfully deleted!');
                         //update users data after deleting
-                        $scope.getUserList();
+                        $scope.getUserList(pageSize);
                     }
                 },
                 function (error) {
@@ -95,7 +97,7 @@ angular.module('userApp.userList', ['ui.router', 'ngStorage'])
                             $('#createUserModal').modal('hide');
                             Notification.success('New user ' +  $scope.createdUser.name + ' was successfully created!');
                             //update users data after creating new user
-                            $scope.getUserList();
+                            $scope.getUserList(pageSize);
                             return $scope.createdUser;
                         }
                     },
