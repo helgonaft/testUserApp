@@ -1,12 +1,14 @@
 @import "helpers/mixins";
 @import "helpers/variables";
+@import "../../../app/bower_components/zessx-sass-flexbox/sass-flexbox";
 
 form {
   input {
     margin: 10px 0;
     padding: 8px;
     width: 100%;
-    border: 1px solid $primary-color;
+    border: none;
+    border-bottom: 1px solid $primary-color;
     outline: none;
 
     @include border-radius(0);
@@ -14,31 +16,64 @@ form {
     @include placeholder {
       color: grey;
     }
+
+    &:focus {
+      border-bottom: 2px solid $primary-color;
+    }
   }
 }
 
 .btn {
+  padding: 10px;
   &-primary {
     background-color: $primary-color;
     color: white;
     border: none;
+    outline: none;
     @include border-radius(0);
 
     &:hover{
       background-color: $primary-dark-color;
       border: none;
+      outline: none;
+      &:active, &:focus {
+        background-color: $primary-dark-color;
+        border: none;
+        outline: none;
+      }
     }
     &:active{
       background-color: $primary-dark-color;
       border: none;
+      outline: none;
+      &:hover, &:focus {
+        background-color: $primary-dark-color;
+        border: none;
+        outline: none;
+      }
     }
     &:focus{
       background-color: $primary-dark-color;
       border: none;
+      outline: none;
+      &:active, &:hover {
+        background-color: $primary-dark-color;
+        border: none;
+        outline: none;
+      }
     }
     &:visited{
       background-color: $primary-dark-color;
       border: none;
+      outline: none;
     }
   }
+}
+
+.signIn-container {
+  height: calc(100vh - 80px);
+  @include display-flex();
+  @include flex-direction-row();
+  @include justify-content-center();
+  @include align-items-center;
 }
