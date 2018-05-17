@@ -139,4 +139,12 @@ form {
 
 .userList-container {
   padding:20px 0;
+
+  table {
+    td {
+      button {
+        width: 100%;
+      }
+    }
+  }
 }

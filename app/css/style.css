@@ -124,3 +124,5 @@ form input {
 
 .userList-container {
   padding: 20px 0; }
+  .userList-container table td button {
+    width: 100%; }
