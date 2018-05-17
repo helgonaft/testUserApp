@@ -5,16 +5,14 @@
                 <h2 class="text-center">Please sign in</h2>
                 <form name="signInForm"  ng-submit="login()" novalidate>
                     <div>
-                        <label>Email</label>
                         <span class="text-danger" ng-if="signInForm.userEmail.$error.pattern">not valid email!</span>
                         <span class="text-danger" ng-if="signInForm.$submitted && signInForm.userEmail.$error.required">required!</span>
-                        <input type="email" name="userEmail" ng-model="loginData.email" ng-pattern="emailFormat" required>
+                        <input type="email" name="userEmail" ng-model="loginData.email" ng-pattern="emailFormat" placeholder="E-mail" required>
                     </div>
                     <div>
-                        <label>Password</label>
                         <span class="text-danger" ng-if="signInForm.userPassword.$error.maxlength">max 10 symbols</span>
                         <span class="text-danger" ng-if="signInForm.$submitted && signInForm.userPassword.$error.required">required!</span>
-                        <input type="password" name="userPassword" ng-model="loginData.password" ng-maxlength="10" required>
+                        <input type="password" name="userPassword" ng-model="loginData.password" ng-maxlength="10" placeholder="Password" required>
                     </div>
 
                     <input class="btn btn-block btn-primary" type="submit" value="Sign In" ng-disabled="signInForm.userEmail.$dirty  && signInForm.userPassword.$dirty && signInForm.$invalid">
