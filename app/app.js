@@ -4,7 +4,8 @@ angular.module('userApp', [
     'ui.router',
     'ngStorage',
     'userApp.signIn',
-    'userApp.userList'
+    'userApp.userList',
+    'angularMoment'
 ])
     .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider

@@ -25,8 +25,8 @@
                     <td>{{user.id}}</td>
                     <td>{{user.name}}</td>
                     <td>{{user.email}}</td>
-                    <td>{{user.created_at}}</td>
-                    <td>{{user.updated_at}}</td>
+                    <td>{{user.created_at | amUtc | amLocal | amDateFormat:'MMMM Do YYYY, HH:mm:ss'}}</td>
+                    <td>{{user.updated_at | amUtc | amLocal | amDateFormat:'MMMM Do YYYY, HH:mm:ss'}}</td>
                     <td><button class="btn btn-danger" ng-click="deleteUser(user.id)">Delete</button></td>
                 </tr>
                 </tbody>
@@ -43,9 +43,9 @@
                         </div>
                         <div class="modal-body">
                             <form name="newUserForm">
-                                <input type="text" name="newUserName" class="form-control" ng-model="newUserData.name" placeholder="name" required>
-                                <input type="email" name="newUserEmail" class="form-control" ng-model="newUserData.email" placeholder="email" required>
-                                <input type="password" name="newUserPassword" class="form-control" ng-model="newUserData.password" placeholder="password" required>
+                                <input type="text" name="newUserName" class="" ng-model="newUserData.name" placeholder="name" required>
+                                <input type="email" name="newUserEmail" class="" ng-model="newUserData.email" placeholder="email" required>
+                                <input type="password" name="newUserPassword" class="" ng-model="newUserData.password" placeholder="password" required>
                             </form>
                         </div>
                         <div class="modal-footer">

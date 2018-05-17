@@ -2,7 +2,7 @@
 
 angular.module('userApp.userList', ['ui.router', 'ngStorage'])
     .controller('UserListCtrl', function ($scope, $rootScope, $http, $sessionStorage, $state) {
-        $scope.userListData = [];
+        $scope.users = [];
         $scope.newUserData = {};
         $scope.errorWhileGettingUserList = false;
 
@@ -22,7 +22,7 @@ angular.module('userApp.userList', ['ui.router', 'ngStorage'])
                 },
                 function (error) {
                     $scope.errorWhileGettingUserList = error.statusText;
-                    $scope.userListData = [];
+                    $scope.users= [];
                     return $scope.errorWhileDeletingUser;
                 }
             );
