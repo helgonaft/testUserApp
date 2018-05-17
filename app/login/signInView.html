@@ -3,17 +3,21 @@
         <div class="row">
             <div class="col-lg-6 col-lg-offset-3">
                 <h2 class="text-center">Please sign in</h2>
-                <form name="signInForm"  ng-submit="login()">
+                <form name="signInForm"  ng-submit="login()" novalidate>
                     <div>
                         <label>Email</label>
-                        <input type="email" name="userEmail" class="" ng-model="loginData.email" required>
+                        <span class="text-danger" ng-if="signInForm.userEmail.$error.pattern">not valid email!</span>
+                        <span class="text-danger" ng-if="signInForm.$submitted && signInForm.userEmail.$error.required">required!</span>
+                        <input type="email" name="userEmail" ng-model="loginData.email" ng-pattern="emailFormat" required>
                     </div>
                     <div>
                         <label>Password</label>
-                        <input type="password" name="userPassword" class="" ng-model="loginData.password" required>
+                        <span class="text-danger" ng-if="signInForm.userPassword.$error.maxlength">max 10 symbols</span>
+                        <span class="text-danger" ng-if="signInForm.$submitted && signInForm.userPassword.$error.required">required!</span>
+                        <input type="password" name="userPassword" ng-model="loginData.password" ng-maxlength="10" required>
                     </div>
 
-                    <input class="btn btn-block btn-primary" type="submit" value="Sign In">
+                    <input class="btn btn-block btn-primary" type="submit" value="Sign In" ng-disabled="signInForm.userEmail.$dirty  && signInForm.userPassword.$dirty && signInForm.$invalid">
                 </form>
 
                 <p ng-if="loginError" class="text-danger">{{errorReason}}</p>
