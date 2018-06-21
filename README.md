@@ -30,3 +30,5 @@ Project is built with AngularJS v.1.5.11
 
 It contains 2 pages: login and user list.
 User list page is available only for authorized users.
+Test credentials: <br>
+email: test@test.com / password: test_test
