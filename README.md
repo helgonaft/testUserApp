@@ -1,6 +1,6 @@
 # `User test application`
 
-#### About the project
+### About the project
 
 This project is a test web app created by Olha Yehorova.
 Project contains 2 pages: login and user list.
